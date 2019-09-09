@@ -38,9 +38,5 @@ def main():
    # Plug in
    bird = Bird()
 	
-
-	
-   
-	
 if __name__ == "__main__":
    main()
