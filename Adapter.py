@@ -5,10 +5,10 @@ class Bird:
 
 class Sparrow(Bird):
     def fly(self):
-      return 1
+      return print("Flying")
 
 	def makeSound(self):
-      return print("This is a sparrow bird")
+      return print("Chirp Chirp")
 
 
 class ToyDuck:
@@ -37,6 +37,9 @@ class BirdAdapter:
 def main():
    # Plug in
    bird = Bird()
+	
+
+	
    
 	
 if __name__ == "__main__":
