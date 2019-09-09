@@ -36,7 +36,10 @@ class BirdAdapter:
 
 def main():
    # Plug in
-   bird = Bird()
+   	bird = Bird()
+	print ("ToyDuck")
+	toyDuck = PlasticToyDuck()
+	
 	
 if __name__ == "__main__":
    main()
