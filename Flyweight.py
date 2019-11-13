@@ -1,39 +1,58 @@
-class ComplexGenetics(object):
-   def __init__(self):
-      pass
-   
-   def genes(self, gene_code):
-      return "ComplexPatter[%s]TooHugeinSize" % (gene_code)
-class Families(object):
-   family = {}
-   
-   def __new__(cls, name, family_id):
-      try:
-         id = cls.family[family_id]
-      except KeyError:
-         id = object.__new__(cls)
-         cls.family[family_id] = id
-      return id
-   
-   def set_genetic_info(self, genetic_info):
-      cg = ComplexGenetics()
-      self.genetic_info = cg.genes(genetic_info)
-   
-   def get_genetic_info(self):
-      return (self.genetic_info)
+import sys
 
-def test():
-   data = (('a', 1, 'ATAG'), ('a', 2, 'AAGT'), ('b', 1, 'ATAG'))
-   family_objects = []
-   for i in data:
-      obj = Families(i[0], i[1])
-      obj.set_genetic_info(i[2])
-      family_objects.append(obj)
-   
-   for i in family_objects:
-      print "id = " + str(id(i))
-      print i.get_genetic_info()
-   print "similar id's says that they are same objects "
+#
+# Flyweight
+# declares an interface through which flyweights can receive
+# and act on extrinsic state
+#
+class Flyweight:
+  def operation(self):
+    pass
+  
+#
+# UnsharedConcreteFlyweight
+# not all subclasses need to be shared
+#
+class UnsharedConcreteFlyweight(Flyweight):
+  def __init__(self, state):
+    Flyweight.__init__(self)
+    self._state = state
+  
+  def operation(self):
+    print("Unshared Flyweight with state " + str(self._state))
 
-if __name__ == '__main__':
-   test()
+#
+# ConcreteFlyweight
+# implements the Flyweight interface and adds storage
+# for intrinsic state
+#
+class ConcreteFlyweight(Flyweight):
+  def __init__(self, state):
+    Flyweight.__init__(self)
+    self._state = state
+    
+  def operation(self):
+    print("Concrete Flyweight with state " + str(self._state))
+
+#
+# FlyweightFactory
+# creates and manages flyweight objects and ensures
+# that flyweights are shared properly
+#
+class FlyweightFactory:
+  def __init__(self):
+    self._flies = {}
+  
+  def getFlyweight(self, key):
+    if (self._flies.get(key) is not None):
+      return self._flies.get(key)
+    
+    self._flies[key] = ConcreteFlyweight(key)        
+    return self._flies.get(key)
+
+
+if __name__ == "__main__":
+  factory = FlyweightFactory()
+
+  factory.getFlyweight(1).operation()
+  factory.getFlyweight(2).operation()
